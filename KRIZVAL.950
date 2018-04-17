@@ -1,0 +1,21 @@
+#program krizovatka
+#unit 0,1,DIGIN8OUT8,X0,Y0,On
+
+#reg word citac
+#def cykl X0.0 ;p†üka
+#def blikat X0.1 ;p†üka
+#def reset X0.2 ;tlaüitko
+#def pip1s S13.2 ;registr S13.2 p°p† 1 sekunda
+
+p 0
+
+ld cykl
+and pip1s
+ld reset
+ctu citac
+
+ld citac
+eq 62
+res low  citac
+res high citac
+e 0

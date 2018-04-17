@@ -1,0 +1,95 @@
+#program krizovatka
+#unit 0,1,DIGIN8OUT8,X0,Y0,On
+
+#reg bit chodec 
+#reg word citac, citchodec
+#def cykl X0.0 ;p†üka
+#def blikat X0.1 ;p†üka
+#def reset X0.2 ;tlaüitko
+#def pip1s S13.2 ;registr S13.2 p°p† 1 sekunda
+
+
+p 0
+
+ld blikat
+jmc provoz
+res Y0
+res chodec
+res low citchodec
+res high citchodec
+ld  S13.2
+set y0.1
+set y0.4
+jmp konec
+
+provoz:
+
+
+ld cykl
+and pip1s
+ld reset
+ctu citac
+
+ld citac
+eq 62
+res low  citac
+res high citac
+
+ld citac
+eq 1
+res Y0
+set Y0.2
+set Y0.3
+set Y0.7
+
+ld citac
+eq 20
+res Y0
+set Y0.1
+set Y0.3
+set Y0.6
+set chodec
+jmc dale1
+ld 39
+wr citchodec
+
+dale1:
+ld chodec
+and pip1s
+ld 0 
+ctd citchodec 
+
+ld citac
+eq 24
+res Y0
+set Y0.0
+set Y0.3
+set Y0.4
+set Y0.6
+
+ld citac
+eq 31
+res Y0
+set Y0.0
+set Y0.5
+set Y0.6
+
+ld citac
+eq 51
+res Y0
+set Y0.0
+set Y0.4
+set Y0.6
+
+ld citac
+eq 59
+res Y0
+set Y0.0
+set Y0.1
+set Y0.3
+set Y0.6
+res chodec
+konec:
+
+
+e 0

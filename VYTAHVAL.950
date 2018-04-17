@@ -1,0 +1,190 @@
+#program vytah
+#unit 0,1,DIGIN8OUT8,X0,Y0,On
+
+#def tlac0 S31.0 ;priz stisk = 0
+#def tlac1 S31.1 ;1p
+#def tlac2 S31.2 ;2p
+#def tlac3 S31.3 ;3p
+#def tlac4 X0.6 ;4p
+#def tlac5 X0.7 ;5p
+#def tlac6 X0.3 ;6p
+#def spinac X0.4 ;spinac v patrech
+#def nulov X0.5 ;nulovani  v prizemi
+#def dvere X0.2 ;dvere ot/zav
+#def podlah X0.1 ; podlah spinac ve vytahu
+
+#def nahorurych Y0.3
+#def nahorupom Y0.2
+#def dolupom Y0.1
+#def dolurych Y0.0
+#def sadatlac Y0.7
+
+#def LED0 Y0.4
+#def LED1 Y0.5
+#def LED2 Y0.6
+
+#reg word cil,patro,rozdil,nahorucas,dolucas, dolu, nahoru
+#reg bit prvzap,spinac1,spinacstary, nahoruton, doluton
+
+p 63 ; void Start()
+
+ld 1
+set prvzap
+set tlac0
+set tlac1
+set tlac2
+set tlac3
+set tlac4
+set tlac5
+set tlac6
+set nulov
+
+
+
+e 63
+
+p 0 ; void Update()
+
+ld prvzap
+jmc provoz ;goto provoz
+set dolupom
+ldc nulov
+res prvzap
+res dolupom
+jmp konec
+
+
+provoz:
+
+ld tlac6
+jmd dale6
+ld 6
+wr cil
+dale6:
+
+ld tlac5
+jmd dale5
+ld 5
+wr cil
+dale5:
+
+ld tlac4
+jmd dale4
+ld 4
+wr cil
+dale4:
+
+ld tlac3
+jmd dale3
+ld 3
+wr cil
+dale3:
+
+ld tlac2
+jmd dale2
+ld 2
+wr cil
+dale2:
+
+ld tlac1
+jmd dale1
+ld 1
+wr cil
+dale1:
+
+ld tlac0
+jmd dale0
+ld 0
+wr cil
+dale0:
+
+ld nahorurych
+or nahorupom
+wr nahoru
+
+ld dolurych
+or dolupom
+wr dolu
+
+ld nahoru
+ld 6
+ton nahorucas.1
+wr nahoruton
+
+ld dolu
+ld 6
+ton dolucas.1
+wr doluton
+
+
+ldc spinac
+let spinacstary
+wr spinac1
+
+ld spinac1 ;kdy +1
+and nahoruton
+ld spinac1 ;kdy -1
+and doluton
+ldc nulov
+cnt patro ;ctud(up/down)
+
+ld cil
+ld patro
+sub
+wr rozdil
+
+ld 1
+res nahorurych
+res nahorupom
+res dolupom
+res dolurych
+
+ld rozdil
+gt 2
+and dvere
+anc rozdil.5 ;nejsou z porn  Ÿ¡sla
+set nahorurych
+set nahorupom
+
+ld rozdil
+eq 2
+and dvere
+set nahorurych
+
+ld rozdil
+eq 1
+and dvere
+set nahorupom
+
+ld rozdil
+lt -2
+and dvere
+and rozdil.5 ;jsou z porn  Ÿ¡sla
+set dolurych
+set dolupom
+
+ld rozdil
+eq -2
+and dvere
+set dolurych
+
+ ld rozdil
+eq -1
+and dvere
+set dolupom
+ 
+ldc podlah
+wr sadatlac
+
+ld patro.0
+wr led0
+ld patro.1
+wr led1
+ld patro.2
+wr led2
+
+
+konec:
+
+
+e 0

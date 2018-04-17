@@ -1,0 +1,121 @@
+#program pracka
+#unit 0,1,DIGIN8OUT8,X0,Y0,On
+#def doprava Y0.0
+#def doleva Y0.1
+#def zdimanileve Y0.2
+#def vypousteni Y0.3
+#def ohrev Y0.4
+#def napousteni Y0.5
+#def prani Y0.7
+
+#def start X0.0
+#def stop X0.1
+#def reset X0.2
+#def hlad X0.7
+#def tepl X0.5
+
+#reg word citpra
+#reg word citac
+#reg bit bezi
+
+p 0
+
+ld start
+set bezi
+
+ld stop
+res bezi
+
+ld bezi
+anc napousteni
+anc ohrev
+and S13.2
+ld reset
+ctu citac
+
+ld prani
+and S13.2 
+ld reset
+ctu citpra
+
+ld citpra
+eq 11
+res low citpra
+res high citpra
+
+ld citpra
+eq 1 
+res Y0.0
+set Y0.1
+
+ld citpra
+eq 3
+res Y0.0
+res Y0.1
+
+ld citpra
+eq 6
+res Y0.1
+set Y0.0
+
+ld citpra
+eq 8 
+res Y0.0
+res Y0.1
+
+
+ld citac
+eq 3 
+res Y0
+set Y0.0
+
+ld citac
+eq 10
+res Y0
+set Y0.1
+set Y0.5
+
+ld hlad
+res Y0.5
+
+ld citac
+eq 15
+res Y0
+
+ld citac
+eq 20
+set Y0.4
+set Y0.7
+
+ld tepl
+res Y0.4
+
+ld citac
+eq 30
+res Y0
+set Y0.7
+
+ld citac
+eq 71
+res Y0
+set Y0.3
+
+ld citac
+eq 72
+res Y0
+set Y0.1
+set Y0.2
+set Y0.3
+
+ld citac
+eq 80
+res Y0
+set Y0.1
+set Y0.3
+
+ld citac
+eq 85
+res Y0
+res bezi
+
+e 0

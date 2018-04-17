@@ -1,0 +1,64 @@
+;Tom ç Valenta, program na voz¡¡¡¡¡¡¡¡¡¡¡¡k
+;          _____ 
+;   voz¡k> \._./ 
+; _____________________________________
+;  K0          K1  pomalu K2           K3
+#program vozik
+#unit 0,1,DIGIN8OUT8,X0,Y0,On
+
+#def TlacStart X0.4
+#def TlacStop X0.5
+#def K0 X0.0
+#def K1 X0.1
+#def K2 X0.2
+#def K3 X0.3
+#def dol Y0.0																																																																																																																																								
+#def dop Y0.1
+#def pomalu Y0.2
+#reg word K3TON,K0TON
+#reg bit K3TONK,K0TONK
+
+
+p 0
+
+ld K3
+ld 5
+ton K3TON.2
+wr K3TONK
+
+ld K0
+ld 3
+ton K0TON.2
+wr K0TONK
+
+ld TlacStart
+or K3  
+and K3TONK    
+or dol 
+anc TlacStop
+anc dop
+anc K0
+wr dol
+
+ld K0
+and K0TONK
+or dop
+anc TlacStop
+anc dol
+anc K3
+wr dop
+
+ld K1
+or pomalu
+and dop
+anc K2
+
+
+ld K2
+or pomalu
+and dol
+anc K1
+or 
+wr pomalu
+
+e 0  
